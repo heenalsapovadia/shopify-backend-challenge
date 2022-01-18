@@ -1,0 +1,27 @@
+.navbar {
+  width: 100%;
+  height: 110px;
+  background-color: lightblue;
+  color: black;
+}
+.navbar .container {
+  max-width: 80%;
+  margin: 0px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 110px;
+}
+.navbar ul {
+  display: flex;
+  margin-right: 10px;
+}
+.navbar ul li {
+  list-style: none;
+  margin: 0px 10px;
+  font-size: 30px;
+  border: solid darkblue;
+  border-radius: 10px;
+  border-spacing: 20px;
+  padding: 5px;
+}
