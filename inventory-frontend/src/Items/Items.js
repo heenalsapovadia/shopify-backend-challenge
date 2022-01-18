@@ -1,4 +1,6 @@
 import react, { useState, useEffect } from "react";
+import Item from "./Item";
+
 const Items = () => {
   const [items, setItems] = useState(null);
 
@@ -22,14 +24,43 @@ const Items = () => {
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [fetchItems]);
+
+  const editItemHandler = (event, itemId) => {
+    event.preventDefault();
+  };
+
+  const deleteItemHandler = (event, itemId) => {
+    event.preventDefault();
+    fetch("http://localhost:8080/inventory/item/" + itemId, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error("Deleting a post failed!");
+        }
+        return res.json();
+      })
+      .then((resData) => {
+        console.log(resData);
+        this.setState((prevState) => {
+          const updatedPosts = prevState.posts.filter((p) => p._id !== postId);
+          return { posts: updatedPosts, postsLoading: false };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ postsLoading: false });
+      });
+  };
 
   let itemsRender = items.map((item) => (
-    <div>
-      <h1>{item.name}</h1>
-      <h2>{item.brand}</h2>
-      <h3>{item.quantity}</h3>
-    </div>
+    <Item
+      item={item}
+      key={item._id}
+      editItemHandler={editItemHandler.bind(this, item._id)}
+      deleteItemHandler={deleteItemHandler.bind(this, item._id)}
+    ></Item>
   ));
   return (
     <>

@@ -93,6 +93,7 @@ exports.deleteItem = (req, res, next) => {
 };
 
 exports.viewItems = (req, res, next) => {
+  console.log("called view items")
   Item.find()
     .then((items) => {
       apiResponse.successResponseWithData(
