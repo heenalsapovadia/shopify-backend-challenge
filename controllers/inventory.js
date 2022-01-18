@@ -1,7 +1,17 @@
 const Item = require("../models/item");
 const apiResponse = require("../helpers/apiResponse");
+const { validationResult } = require("express-validator");
 
 exports.createItem = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return apiResponse.errorResponse(
+      res,
+      errors.array(),
+      "Create Item Failed - Validation Failed - Entered data is incorrect",
+      422
+    );
+  }
   const name = req.body.name;
   const brand = req.body.brand;
   const quantity = req.body.quantity;
@@ -46,7 +56,11 @@ exports.editItem = (req, res, next) => {
     })
     .then((result) => {
       console.log(result);
-      apiResponse.successResponseWithData(res, "Item Update successful", result);
+      apiResponse.successResponseWithData(
+        res,
+        "Item Update successful",
+        result
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -66,7 +80,11 @@ exports.deleteItem = (req, res, next) => {
     })
     .then((result) => {
       console.log(result);
-      apiResponse.successResponseWithData(res, "Item deleted successfully!", result);
+      apiResponse.successResponseWithData(
+        res,
+        "Item deleted successfully!",
+        result
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -77,7 +95,12 @@ exports.deleteItem = (req, res, next) => {
 exports.viewItems = (req, res, next) => {
   Item.find()
     .then((items) => {
-      apiResponse.successResponseWithData(res, "Fetched all items successfully", items, 200);
+      apiResponse.successResponseWithData(
+        res,
+        "Fetched all items successfully",
+        items,
+        200
+      );
     })
     .catch((err) => {
       console.log(err);

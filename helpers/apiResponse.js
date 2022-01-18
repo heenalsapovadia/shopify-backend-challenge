@@ -5,10 +5,10 @@ exports.successResponseWithData = (res, msg, data, statusCode) => {
   });
 };
 
-exports.errorResponse = (res, error, msg) => {
-  return res.status(500).json({
+exports.errorResponse = (res, error, msg, statusCode) => {
+  return res.status(statusCode || 500).json({
     message: msg,
-    error: error.message,
+    error: error,
   });
 };
 
