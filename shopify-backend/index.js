@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const inventoryRoutes = require("./routes/inventory");
+const warehouseRoutes = require("./routes/warehouse");
 
 const app = express();
 app.use(cors);
@@ -11,6 +12,8 @@ app.use(cors);
 app.use(bodyParser.json());
 
 app.use("/inventory", inventoryRoutes);
+
+app.use("/warehouse", warehouseRoutes);
 
 mongoose
   .connect(

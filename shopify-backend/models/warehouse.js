@@ -1,27 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const itemSchema = new Schema(
+const warehouseSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    brand: {
+    address: {
       type: String,
       required: true,
-    },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    warehouse: {
-      type: String,
-      required: false,
     },
   },
   { timestamps: true }
 );
 
 // export a model based on the above defined schema
-module.exports = mongoose.model("Item", itemSchema);
+module.exports = mongoose.model("Warehouse", warehouseSchema);
