@@ -1,6 +1,17 @@
 const Item = require("../models/item");
+const apiResponse = require("../helpers/apiResponse");
+const { validationResult } = require("express-validator");
 
 exports.createItem = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return apiResponse.errorResponse(
+      res,
+      errors.array(),
+      "Create Item Failed - Validation Failed - Entered data is incorrect",
+      422
+    );
+  }
   const name = req.body.name;
   const brand = req.body.brand;
   const quantity = req.body.quantity;
@@ -15,16 +26,15 @@ exports.createItem = (req, res, next) => {
     .save()
     .then((result) => {
       console.log(result);
-      res.status(201).json({
-        message: "Item Creation successful",
-        item: result,
-      });
+      apiResponse.successResponseWithData(
+        res,
+        "Item Creation successful",
+        result
+      );
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({
-        message: "Create Item Failed",
-      });
+      apiResponse.errorResponse(res, err, "Create Item Failed");
     });
 };
 
@@ -37,29 +47,24 @@ exports.editItem = (req, res, next) => {
   Item.findById(itemId)
     .then((item) => {
       if (!item) {
-        res.status(404).json({
-          message: "Could not find item",
-        });
+        apiResponse.notFoundResponse(res, "Could not find item");
       }
       item.name = name;
       item.brand = brand;
       item.quantity = quantity;
-
       return item.save();
     })
     .then((result) => {
       console.log(result);
-      res.status(200).json({
-        message: "Item Update successful",
-        item: result,
-      });
+      apiResponse.successResponseWithData(
+        res,
+        "Item Update successful",
+        result
+      );
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({
-        message: "Update Item Failed",
-        error: err.message(),
-      });
+      apiResponse.errorResponse(res, err, "Update Item Failed");
     });
 };
 
@@ -69,40 +74,36 @@ exports.deleteItem = (req, res, next) => {
   Item.findById(itemId)
     .then((item) => {
       if (!item) {
-        res.status(404).json({
-          message: "Could not find item",
-        });
+        apiResponse.notFoundResponse(res, "Could not find item");
       }
       return Item.findByIdAndRemove(itemId);
     })
     .then((result) => {
       console.log(result);
-      res.status(200).json({
-        message: "Item Delete successful",
-        item: result,
-      });
+      apiResponse.successResponseWithData(
+        res,
+        "Item deleted successfully!",
+        result
+      );
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({
-        message: "Delete Item Failed",
-        error: err.message(),
-      });
+      apiResponse.errorResponse(res, err, "Delete Item Failed");
     });
 };
 
 exports.viewItems = (req, res, next) => {
   Item.find()
     .then((items) => {
-      res.status(200).json({
-        message: "Fetched all items successfully",
+      apiResponse.successResponseWithData(
+        res,
+        "Fetched all items successfully",
         items,
-      });
+        200
+      );
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json({
-        message: "Fetch Failed",
-      });
+      apiResponse.errorResponse(res, err, "Fetch Failed");
     });
 };
