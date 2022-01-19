@@ -37,7 +37,6 @@ exports.createWarehouse = (req, res, next) => {
 };
 
 exports.fetchWarehouses = (req, res, next) => {
-  console.log("called view items")
   Warehouse.find()
     .then((warehouses) => {
       apiResponse.successResponseWithData(

@@ -24,14 +24,19 @@ const Items = () => {
 
   useEffect(() => {
     fetchItems();
-  }, [fetchItems]);
+  }, []);
 
-  const editItemHandler = (event, itemId) => {
-    event.preventDefault();
+  const editItemHandler = (itemId) => {
+    // event.preventDefault();
+    
+    // setItems((prevState) => {
+    //   const toEditItem = { ...prevState.find((i) => i._id === itemId) };
+    // });
   };
 
-  const deleteItemHandler = (event, itemId) => {
-    event.preventDefault();
+  const deleteItemHandler = (itemId) => {
+    // event.preventDefault();
+    console.log("ITEM_ID", itemId);
     fetch("http://localhost:8080/inventory/item/" + itemId, {
       method: "DELETE",
     })
@@ -43,29 +48,32 @@ const Items = () => {
       })
       .then((resData) => {
         console.log(resData);
-        this.setState((prevState) => {
-          const updatedPosts = prevState.posts.filter((p) => p._id !== postId);
-          return { posts: updatedPosts, postsLoading: false };
+        setItems((prevState) => {
+          const updatedItems = prevState.filter((p) => p._id !== itemId);
+          return updatedItems;
         });
       })
       .catch((err) => {
         console.log(err);
-        this.setState({ postsLoading: false });
+        // this.setState({ postsLoading: false });
       });
   };
 
-  let itemsRender = items.map((item) => (
-    <Item
-      item={item}
-      key={item._id}
-      editItemHandler={editItemHandler.bind(this, item._id)}
-      deleteItemHandler={deleteItemHandler.bind(this, item._id)}
-    ></Item>
-  ));
+  let itemsRender = items
+    ? items.map((item) => (
+        <Item
+          item={item}
+          key={item._id}
+          onEdit={editItemHandler.bind(this, item._id)}
+          onDelete={deleteItemHandler.bind(this, item._id)}
+        ></Item>
+      ))
+    : [];
   return (
     <>
       <div>Items</div>
-      <div>{itemsRender}</div>
+      <div>{itemsRender.length!=0 && itemsRender}</div>
+      
     </>
   );
 };

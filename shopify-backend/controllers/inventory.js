@@ -3,23 +3,27 @@ const apiResponse = require("../helpers/apiResponse");
 const { validationResult } = require("express-validator");
 
 exports.createItem = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return apiResponse.errorResponse(
-      res,
-      errors.array(),
-      "Create Item Failed - Validation Failed - Entered data is incorrect",
-      422
-    );
-  }
-  const name = req.body.name;
-  const brand = req.body.brand;
-  const quantity = req.body.quantity;
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return apiResponse.errorResponse(
+  //     res,
+  //     errors.array(),
+  //     "Create Item Failed - Validation Failed - Entered data is incorrect",
+  //     422
+  //   );
+  // }
+  console.log(req.body);
+  const body = req.body;
+  const name = body.name;
+  const brand = body.brand;
+  const quantity = body.quantity;
+  const warehouse = body.warehouse;
 
   const item = new Item({
     name,
     brand,
     quantity,
+    warehouse
   });
 
   item
@@ -93,7 +97,6 @@ exports.deleteItem = (req, res, next) => {
 };
 
 exports.viewItems = (req, res, next) => {
-  console.log("called view items")
   Item.find()
     .then((items) => {
       apiResponse.successResponseWithData(
