@@ -7,7 +7,7 @@ import EditItem from "./Items/EditItem";
 import Warehouse from "./Items/Warehouse";
 
 function App() {
-  const [refresh, setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false);
   const [viewItems, setViewItems] = useState(false);
   const [createItems, setCreateItems] = useState(false);
   const [createWarehouse, setCreateWarehouse] = useState(false);
@@ -167,15 +167,6 @@ function App() {
     console.log(editItem);
   };
 
-  const setEditItemHandler = (item) => {
-    setEditItem({
-      name: item.name,
-      brand: item.brand,
-      quantity: item.quantity,
-      warehouse: item.warehouse,
-    });
-    console.log(editItem);
-  };
   const setNewWarehouseHandler = (warehouse) => {
     setNewWarehouse({
       name: warehouse.name,
@@ -255,10 +246,10 @@ function App() {
     fetchWarehouseList();
   }, [viewItems, createItems, createWarehouse]);
 
-useEffect(() => {
-  fetchItems();
+  useEffect(() => {
+    fetchItems();
     fetchWarehouseList();
-},[refresh]);
+  }, [refresh]);
 
   return (
     <div className="App">
@@ -283,14 +274,6 @@ useEffect(() => {
           onCreate={editItemHandler}
         ></CreateItem>
       )}
-      {/* {editItems && (
-        <EditItem
-          item={editItem}
-          warehouses={warehouses}
-          editItem={setItemHandler}
-          onEdit={editItemHandler}
-        ></EditItem>
-      )} */}
       {createWarehouse && (
         <Warehouse
           newWarehouse={setNewWarehouseHandler}
