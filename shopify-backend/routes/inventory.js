@@ -13,10 +13,6 @@ router.post(
     body("brand").trim().isLength({ min: 1 }),
     body("quantity").trim().isInt(),
   ],
-  (req, res, next) => {
-    // console.log("body", req.body);
-    next();
-  },
   inventoryController.createItem
 );
 

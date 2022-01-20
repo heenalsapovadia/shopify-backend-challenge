@@ -3,15 +3,15 @@ const apiResponse = require("../helpers/apiResponse");
 const { validationResult } = require("express-validator");
 
 exports.createItem = (req, res, next) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   return apiResponse.errorResponse(
-  //     res,
-  //     errors.array(),
-  //     "Create Item Failed - Validation Failed - Entered data is incorrect",
-  //     422
-  //   );
-  // }
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return apiResponse.errorResponse(
+      res,
+      errors.array(),
+      "Create Item Failed - Validation Failed - Entered data is incorrect",
+      422
+    );
+  }
   console.log(req.body);
   const body = req.body;
   const name = body.name;
