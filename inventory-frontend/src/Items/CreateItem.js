@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-const CreateItem = () => {
+
+const CreateItem = (props) => {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [quantity, setQuantity] = useState(0);
@@ -10,7 +11,7 @@ const CreateItem = () => {
     { name: "abc warehouse" },
   ]);
 
-  const postItem = (event) => {
+  const postItem = () => {
     let url = "http://localhost:8080/inventory/item";
     let method = "POST";
 
@@ -34,10 +35,31 @@ const CreateItem = () => {
       })
       .then((res) => {
         console.log("res", res);
+        // let updatedItems = [
+        //   ...props.items,
+        //   {
+        //     name: name,
+        //     brand: brand,
+        //     quantity: quantity,
+        //     warehouse: warehouse,
+        //   },
+        // ];
+        // props.onCreate(updatedItems);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const createItemHandler = () => {
+    console.log("inside createItemHandler : ");
+    props.editItem({
+      name: name,
+      brand: brand,
+      quantity: quantity,
+      warehouse: warehouse,
+    });
+    props.onCreate();
   };
 
   const fetchWarehouseList = () => {
@@ -63,14 +85,16 @@ const CreateItem = () => {
     fetchWarehouseList();
   }, []);
 
-  const warehouseRender = warehouses.map((warehouse) => (
-    <option value={warehouse.name}>{warehouse.name}</option>
+  const warehouseRender = props.warehouses.map((warehouse) => (
+    <option value={warehouse.name} key={warehouse._id}>
+      {warehouse.name}
+    </option>
   ));
 
   return (
     <div>
       <div>
-        <label>Name</label>
+      <label htmlFor="name">Name</label>
         <input
           type="text"
           id="name"
@@ -79,7 +103,7 @@ const CreateItem = () => {
         />
       </div>
       <div>
-        <label>Brand</label>
+      <label htmlFor="brand">Brand</label>
         <input
           type="text"
           id="brand"
@@ -88,7 +112,7 @@ const CreateItem = () => {
         />
       </div>
       <div>
-        <label>Quantity</label>
+      <label htmlFor="quantity">Quantity</label>
         <input
           type="number"
           id="quantity"
@@ -97,7 +121,7 @@ const CreateItem = () => {
         />
       </div>
       <div>
-        <label for="warehouses">Warehouse</label>
+      <label htmlFor="warehouses">Warehouse</label>
         <select
           name="warehouses"
           id="warehouses"

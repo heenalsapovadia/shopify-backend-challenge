@@ -9,8 +9,8 @@ const router = express.Router();
 router.post(
   "/item",
   [
-    body("name").trim().isLength({ min: 5 }),
-    body("brand").trim().isLength({ min: 3 }),
+    body("name").trim().isLength({ min: 1 }),
+    body("brand").trim().isLength({ min: 1 }),
     body("quantity").trim().isInt(),
   ],
   (req, res, next) => {

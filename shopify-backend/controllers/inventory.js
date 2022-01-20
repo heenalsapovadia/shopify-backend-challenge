@@ -47,6 +47,7 @@ exports.editItem = (req, res, next) => {
   const name = req.body.name;
   const brand = req.body.brand;
   const quantity = req.body.quantity;
+  const warehouse = req.body.warehouse;
 
   Item.findById(itemId)
     .then((item) => {
@@ -56,6 +57,7 @@ exports.editItem = (req, res, next) => {
       item.name = name;
       item.brand = brand;
       item.quantity = quantity;
+      item.warehouse = warehouse;
       return item.save();
     })
     .then((result) => {

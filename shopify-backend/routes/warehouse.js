@@ -9,8 +9,8 @@ const router = express.Router();
 router.post(
   "/create",
   [
-    body("name").trim().isLength({ min: 5 }),
-    body("address").trim().isLength({ min: 3 }),
+    body("name").trim().isLength({ min: 1 }),
+    body("address").trim().isLength({ min: 1 }),
   ],
   warehouseController.createWarehouse
 );
