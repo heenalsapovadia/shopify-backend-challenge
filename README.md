@@ -24,7 +24,8 @@ Frontend : `React.js`
 4. At the end of all the above steps, you should be able to access the application at the following URL : `http://localhost:3000`
  
 ## Routing:
-1. The following are the routes available for accessing the inventory items :
+The following are the routes available for accessing the inventory items
+
     GET http://localhost:8080/inventory/items
 Returns all the list of items in the inventory stored in MongoDB database
 
@@ -37,7 +38,8 @@ Updates the inventory item with the `itemId` passed in the request parameter and
     DELETE http://localhost:8080/inventory/item/:itemId
 Deletes the item with the `itemId` passed in the request parameter from the MongoDB database
     
-2. The following are the routes available for accessing the warehouse    
+The following are the routes available for accessing the warehouse
+
     GET http://localhost:8080/warehouse/get
 Returns all the list of warehouses stored in MongoDB database
 
