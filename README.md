@@ -22,6 +22,8 @@ Frontend : `React.js`
  6. `npm install` : Again, this downloads and installs the dependencies required for the frontend
  7. `npm start` : This starts the server for the frontend code on PORT 3000
 4. At the end of all the above steps, you should be able to access the application at the following URL : `http://localhost:3000`
+
+`NOTE1`: While creating a new item for the inventory by hitting the CREATE button in the nav bar, there are a couple of validations performed by the backend, but not handled on the frontend. These include minimum 1 character for "name" and "brand" fields.
  
 ## Routing:
 The following are the routes available for accessing the inventory items
